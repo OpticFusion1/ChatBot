@@ -1,0 +1,74 @@
+#The name that players use to start a conversation
+#Don"t use special characters here
+name: "ChatBot"
+#Name aliases, don't use special characters here
+aliases:
+ - "Bot"
+#The prefix shown in chat when the bot responds
+#Supports color codes
+prefix: "&8[&c&lChatBot&8] &c&l»"
+#The time (in ticks) before the bot responds
+#If the bot responds too fast, the message will appear before the users message
+response-speed: 10
+#Used when the user only put the bots name or the sentence isn't found
+#Used when the user adds a new misc message
+message-added: "Added the message"
+#Default bot if a specified bot isn't found, only one of the bots should be default
+default: true
+no-matches:
+ bot-name-only:
+  - Hi!
+  - Hello there player!
+ sentence-not-found:
+  - What do you mean %player_name%?
+  - Try to rephrase your question.
+  - Try asking me the question again in simpler terms.
+
+events:
+ playerjoin:
+  - "Hello %player_name%!"
+ playerquit:
+  - "Goodbye %player_name%!"
+  
+#Valid sentences the bot will response to, make sure to always use lowercase
+#You must escape any " characters (i.e. instead of """ it would be "\"") or use ' instead
+responses:
+ spawn:
+  - '{"text":"Click me to go to spawn","clickEvent":{"action":"run_command","value":"/spawn"}}'
+ how:
+  are:
+   you:
+    - "Great!"
+ ban:
+  me:
+   - "[cmd type=op]ban %player_name% You asked for it, right?[/cmd]"
+ kick:
+  me:
+   - "[cmd type=op]kick %player_name% You asked for it, right?[/cmd]"
+ send:
+  me:
+   home:
+    - "[cmd type=normal]ehome[/cmd] There you go %player_name% -s"
+ you:
+  bore:
+   me:
+    - "You are you talking to me then?"
+  are:
+   doing:
+    fine:
+     - "Thanks I do my best."
+    great:
+     - "You are too kind. Maybe later I will be really great."
+   not:
+    giving:
+     me:
+      the:
+       answers:
+        i:
+         need:
+          - "I'm sorry"
+#This section is an alternative to the section above, or for repeats
+#When adding a message, always use lowercase and -s for spaces [for the response it doesn"t matter what you do (double "s don"t matter)]
+miscellaneous:
+ hi-friend:
+  - "Hello, how are you?"

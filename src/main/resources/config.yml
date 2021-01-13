@@ -1,0 +1,43 @@
+#If true the plugin will auto-update
+auto-update: true
+#The prefix used for command messages
+prefix: "&8[&c&lChatBot]&8 &a"
+#The message sent to the player if they use the /bot command incorrectly
+incorrect-usage: "Incorrect usage! Use &o/chatbot <reload/(add)> (message) (response)&c!"
+#The message sent to the player if the plugin was successfully reloaded
+reloaded: "Successfully reloaded the config!"
+#The mesasge sent to the player when they don't have permission to use a certain command
+no-permission: "You do not have permission to do that!"
+#The message sent to the player when they successfully added a message to the miscellaneous section of the config
+message-added: "Message successfully added to the Chatbot config!"
+#The message sent if the command is done in the console
+console-execute: "You must execute this command as a player"
+#The message sent to the player if the bot doesn't exist
+no-bot: "There isn't a bot called %bot_name%, looking for a default bot"
+#The message sent to the player if the default isn't found
+no-default-bot: "There isn't a default bot set"
+#The message sent to the player if every bot gets reloaded
+all-bots-reloaded: "All bots have been reloaded"
+no-bots: "There were no bots to load"
+#The message sent to the player if a single bot is reloaded
+bot-reloaded: "%bot_name% has been reloaded"
+#The message sent if the player does /bot reload
+reload-usage: "Not Enough Arguments: /bot reload <config|all|filename>"
+#The message sent if the player does /bot disable
+disable-usage: "Not Enough Arguments: /bot disable <all|filename>"
+#The message sent if the player does /bot enable
+enable-usage: "Not Enough Arguments: /bot enable <all|filename>"
+#The message sent if the player does /bot
+not-enough-args: "You did not enter enough arguments"
+#The message sent when the player disables a bot
+bot-disabled: "%bot_name% has been disabled"
+#The message sent when every bot gets disabled
+all-bots-disabled: "All bots have been disabled"
+#The message sent when a bot gets enabled
+bot-enabled: "%bot_name% has been enabled"
+#The message sent when all bots get enabled
+all-bots-enabled: "All bots have been enabled"
+#The message sent when a bot doesn't get loaded
+file-wasnt-loaded: "%file_name% wasn't loaded"
+bot-already-disabled: "%bot_name% is already disabled"
+bot-already-enabled: "%bot_name% is already enabled"

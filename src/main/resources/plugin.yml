@@ -1,0 +1,11 @@
+name: ChatBot
+version: ${project.version}
+author: Optic_Fusion1
+main: optic_fusion1.chatbot.ChatBot
+description: Talk to an extremely customizable virtual bot that responds to anything you configure on your server
+softdepend: ["PlaceholderAPI", "MVdWPlaceholderAPI"]
+api-version: 1.16
+commands:
+  bot:
+    description: Main command for ChatBot plugin
+    usage: /chatbot <enable <botname|all>|disable <botname|all>|reload <config|botname|all>|list|add <botname> <message> <response>>

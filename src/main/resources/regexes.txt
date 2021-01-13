@@ -1,0 +1,8 @@
+(([2]([0-4][0-9]|[5][0-5])|[0-1]?[0-9]?[0-9])[.]){3}(([2]([0-4][0-9]|[5][0-5])|[0-1]?[0-9]?[0-9])): Please don't share ips!
+((?:https\:\/\/)|(?:http\:\/\/)|(?:www\.))?([a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\??)[a-zA-Z0-9\-\._\?\,\'\/\\\+&%\$#\=~]+): Please don't share domains!
+[A-Z]{2,}\b|[A-Z]{2}\b: Please keep the capital letters to a minimum
+you gave the wrong (answer|response): Maybe, it will be looked into
+you should get( a little)? smarter: I get a little smarter every day!
+you are doing (well|not bad|pretty well): Oh no, not that well. I have a long way to go yet.
+you are a bad (chatbot|teacher): I can only teach what was programmed for me.
+you (never answered my question|did not answer me): Try to rephrase you question

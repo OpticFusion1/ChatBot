@@ -31,7 +31,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitScheduler;
 
-//TODO: Add json text component support
 //TODO: Update example config to take into account all current features
 public class Bot {
 

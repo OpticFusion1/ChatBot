@@ -56,6 +56,13 @@ public class CommandResponse {
             i += soundMatcher.group().length();
           }
           break;
+        case "perm":
+          Matcher permissionMatcher = PERMISSION_PATTERN.matcher(response.substring(i));
+          if (permissionMatcher.find()) {
+            blocks.add(new PermissionResponseBlock(permissionMatcher.group(1), permissionMatcher.group(2)));
+            i += permissionMatcher.group().length();
+          }
+          break;
       }
     }
     return blocks.toArray(new ResponseBlock[]{});

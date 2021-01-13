@@ -36,7 +36,7 @@ public class PlayerChatEventListener implements Listener {
   }
 
   private void processMessage(Player player, Bot bot, String message) {
-    if(bot.isBotNameOnly(message)){
+    if (bot.isBotNameOnly(message)) {
       bot.processResponse(player, "no-matches.bot-name-only", true);
       return;
     }
@@ -52,12 +52,12 @@ public class PlayerChatEventListener implements Listener {
     if (sentRegex) {
       return;
     }
-    String msg = "responses." + message.replaceAll(bot.getName() + " ", "").replaceAll(" ", ".").replaceAll("[^\\p{L} ]", "").toLowerCase();
+    String msg = "responses." + message.replaceAll("[^\\p{L} ]", "").replaceAll(bot.getName() + " ", "").replaceAll(" ", ".").toLowerCase();
     if (bot.hasResponse(msg)) {
       bot.processResponse(player, msg, true);
       return;
     }
-    String miscConfigString = "miscellaneous." + message.replaceAll(" ", "-").replaceAll("[^\\p{L} ]", "").toLowerCase();
+    String miscConfigString = "miscellaneous." + message.replaceAll("[^\\p{L} ]", "").replaceAll(" ", "-").toLowerCase();
     if (bot.hasResponse(miscConfigString)) {
       bot.processResponse(player, miscConfigString, true);
     }

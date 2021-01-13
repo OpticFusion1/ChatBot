@@ -8,20 +8,20 @@ import optic_fusion1.chatbot.bot.Bot;
 
 public class SoundResponseBlock extends ResponseBlock {
 
-	private String sound;
+  private String sound;
 
-	public SoundResponseBlock(String sound) {
-		this.sound = sound;
-	}
+  public SoundResponseBlock(String sound) {
+    this.sound = sound;
+  }
 
-	@Override
-	public void execute(Bot bot, BukkitScheduler SCHEDULER, Player player, String origMessage) {
-		player.playSound(player.getLocation(), Sound.valueOf(sound), 1, 0);
-	}
+  @Override
+  public void execute(Bot bot, BukkitScheduler SCHEDULER, Player player, String origMessage) {
+    player.playSound(player.getLocation(), Sound.valueOf(sound), 1, 0);
+  }
 
-	@Override
-	public String getResponseType() {
-		return "sound";
-	}
+  @Override
+  public String getResponseType() {
+    return "sound";
+  }
 
 }

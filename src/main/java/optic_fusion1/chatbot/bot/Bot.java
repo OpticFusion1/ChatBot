@@ -18,6 +18,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 import optic_fusion1.chatbot.ChatBot;
+import optic_fusion1.chatbot.bot.responses.CommandResponse;
 import optic_fusion1.chatbot.utils.FileUtils;
 import optic_fusion1.chatbot.utils.JSONUtils;
 import org.bukkit.Bukkit;
@@ -323,58 +324,7 @@ public class Bot {
 
   public void processResponse(Player player, String message, boolean getRandomResponse) {
     String response = getRandomResponse ? getRandomResponse(message.toLowerCase()) : message.toLowerCase();
-//    if (response.equals("not-found")) {
-//      processResponse(player, "no-matches.sentence-not-found", true);
-//      return;
-//    }
-    if (!response.contains("[cmd") && !response.contains("[perm") && !response.contains("[sound")) {
-      if (!response.contains("%arg-")) {
-        sendTimedBroadcast(player, response);
-      } else {
-        sendTimedBroadcast(player, response, message.replaceAll("-", " ").replaceAll("\\.", " "));
-      }
-      return;
-    }
-    while (!response.isEmpty()) {
-      if (response.contains("[cmd")) {
-        Matcher matcher = COMMAND_PATTERN.matcher(response);
-        if (!matcher.find()) {
-          continue;
-        }
-        response = response.replaceFirst(COMMAND_PATTERN.pattern(), "").trim();
-
-        SCHEDULER.scheduleSyncDelayedTask(ChatBot.INSTANCE, () -> {
-          boolean silent = message.endsWith("-s");
-          String m = silent ? message.substring(0, message.length() - 2).trim() : message;
-          Bukkit.dispatchCommand(matcher.group(1).equalsIgnoreCase("op") ? Bukkit.getConsoleSender() : player,
-                  translate(player, m));
-        }, responseSpeed);
-      } else if (response.contains("[perm")) {
-        Matcher matcher = PERMISSION_PATTERN.matcher(response);
-        if (!matcher.find()) {
-          continue;
-        }
-        response = response.replaceFirst(PERMISSION_PATTERN.pattern(), "").trim();
-        if (!player.hasPermission(matcher.group(1))) {
-          return;
-        }
-        processResponse(player, matcher.group(2), false);
-      } else if (response.contains("[sound")) {
-        Matcher matcher = SOUND_PATTERN.matcher(response);
-        if (!matcher.find()) {
-          continue;
-        }
-        response = response.replaceFirst(SOUND_PATTERN.pattern(), "").trim();
-        player.playSound(player.getLocation(), Sound.valueOf(matcher.group(1).toUpperCase()), 1, 0);
-      } else {
-        if (!response.contains("%arg-")) {
-          sendTimedBroadcast(player, response);
-        } else {
-          sendTimedBroadcast(player, response, message.replaceAll("-", " ").replaceAll("\\.", " "));
-        }
-        response = "";
-      }
-    }
+    new CommandResponse(response);
   }
 
   public List<String> match(String text, String regex) {

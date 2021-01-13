@@ -1,10 +1,7 @@
 package optic_fusion1.chatbot.bot.responses;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
-
-import optic_fusion1.chatbot.ChatBot;
 import optic_fusion1.chatbot.bot.Bot;
 
 public class MessageResponseBlock extends ResponseBlock {

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -19,6 +20,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 import optic_fusion1.chatbot.ChatBot;
 import optic_fusion1.chatbot.bot.responses.CommandResponse;
+import optic_fusion1.chatbot.bot.translate.TranslateResponse;
 import optic_fusion1.chatbot.utils.FileUtils;
 import optic_fusion1.chatbot.utils.JSONUtils;
 import org.bukkit.Bukkit;
@@ -38,9 +40,6 @@ public class Bot {
 
   private static final Random RANDOM = new Random();
   private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("[%]([^%]+)[%]");
-  private static final Pattern COMMAND_PATTERN = Pattern.compile("\\[cmd type\\=(.+?)\\](.*?)\\[\\/cmd\\]");
-  private static final Pattern PERMISSION_PATTERN = Pattern.compile("\\[perm\\=(.+?)\\](.*?)\\[\\/perm\\]");
-  private static final Pattern SOUND_PATTERN = Pattern.compile("\\[sound\\=(.+?)\\](.*?)\\[\\/sound\\]");
   private static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
   private final HashMap<String, String> regexes = new HashMap<>();
   private final File file;
@@ -120,35 +119,7 @@ public class Bot {
   }
 
   public String translate(CommandSender sender, String originalMessage, String... playerMessages) {
-    String translatedString = originalMessage;
-    if (sender instanceof Player) {
-      Player player = (Player) sender;
-      if (ChatBot.usePlaceholderAPI) {
-        translatedString = PlaceholderAPI.setBracketPlaceholders(player, translatedString);
-        translatedString = PlaceholderAPI.setPlaceholders(player, translatedString);
-      }
-      if (ChatBot.useMVDWPlaceholderAPI) {
-        translatedString = be.maximvdw.placeholderapi.PlaceholderAPI.replacePlaceholders(player, translatedString);
-      }
-      translatedString = translatePlayerPlaceholders(player, translatedString);
-    }
-    translatedString = translateBotPlaceholders(translatedString, playerMessages);
-    translatedString = translateRandomPlaceholders(translatedString);
-    translatedString = ChatColor.translateAlternateColorCodes('&', translatedString);
-    return translatedString;
-  }
-
-  public String translateFilePlaceholders(File file, String text) {
-    Matcher matcher = PLACEHOLDER_PATTERN.matcher(text);
-    while (matcher.find()) {
-      String group = matcher.group(1);
-      switch (group) {
-        case "file_name": {
-          text = text.replaceAll("%file_name%", file.getName());
-        }
-      }
-    }
-    return text;
+    return TranslateResponse.parseResponse(this, sender, originalMessage);
   }
 
   public String translateRandomPlaceholders(String text) {
@@ -204,40 +175,6 @@ public class Bot {
     return text;
   }
 
-  public String translatePlayerPlaceholders(Player player, String text) {
-    Matcher matcher = PLACEHOLDER_PATTERN.matcher(text);
-    while (matcher.find()) {
-      String group = matcher.group(1);
-      switch (group) {
-        case "player_name": {
-          text = text.replaceAll("%player_name%", player.getName());
-          continue;
-        }
-        case "player_name_lowercase": {
-          text = text.replaceAll("%player_name_lowercase%", player.getName().toLowerCase());
-          continue;
-        }
-        case "player_name_uppercase": {
-          text = text.replaceAll("%player_name_uppercase%", player.getName().toUpperCase());
-          continue;
-        }
-        case "player_displayname": {
-          text = text.replaceAll("%player_displayname%", player.getDisplayName());
-          continue;
-        }
-        case "player_displayname_lowercase": {
-          text = text.replaceAll("%player_displayname_lowercase%", player.getDisplayName().toLowerCase());
-          continue;
-        }
-        case "player_displayname_uppercase": {
-          text = text.replaceAll("%player_displayname_uppercase%", player.getDisplayName().toUpperCase());
-        }
-
-      }
-    }
-    return text;
-  }
-
   public String translatePlayerDeathEvent(PlayerDeathEvent event, Player player, String message) {
     String finalString = message;
     Entity killed = (Entity) event.getEntity();
@@ -277,16 +214,16 @@ public class Bot {
       ComponentBuilder componentBuilder = new ComponentBuilder();
       if (JSONUtils.isJSONValid(m)) {
         componentBuilder.append(new TextComponent(ChatColor.translateAlternateColorCodes('&', prefix + " ")));
-        componentBuilder.append(ComponentSerializer.parse(translate(player, m, playerMessages)));
+        componentBuilder.append(ComponentSerializer.parse(ChatColor.translateAlternateColorCodes('&', translate(player, m, playerMessages))));
       }
       if (m.contains("\n")) {
         String[] args = m.split("\n");
         for (String arg : args) {
           if (silent) {
-            player.sendMessage(translate(player, prefix + " " + arg, playerMessages));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', translate(player, prefix + " " + arg, playerMessages)));
             continue;
           }
-          Bukkit.broadcastMessage(translate(player, prefix + " " + arg, playerMessages));
+          Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', translate(player, prefix + " " + arg, playerMessages)));
         }
         return;
       }
@@ -295,14 +232,14 @@ public class Bot {
           player.spigot().sendMessage(componentBuilder.create());
           return;
         }
-        player.sendMessage(translate(player, prefix + " " + m, playerMessages));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', translate(player, prefix + " " + m, playerMessages)));
         return;
       }
       if (!componentBuilder.getParts().isEmpty()) {
         Bukkit.spigot().broadcast(componentBuilder.create());
         return;
       }
-      Bukkit.broadcastMessage(translate(player, prefix + " " + m, playerMessages));
+      Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', translate(player, prefix + " " + m, playerMessages)));
     }, responseSpeed);
   }
 
@@ -324,7 +261,7 @@ public class Bot {
 
   public void processResponse(Player player, String message, boolean getRandomResponse) {
     String response = getRandomResponse ? getRandomResponse(message.toLowerCase()) : message.toLowerCase();
-    new CommandResponse(response);
+    new CommandResponse(response).execute(this, SCHEDULER, player, message);
   }
 
   public List<String> match(String text, String regex) {

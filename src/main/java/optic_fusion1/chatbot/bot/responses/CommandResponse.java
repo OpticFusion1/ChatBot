@@ -27,11 +27,13 @@ public class CommandResponse {
     char[] array = response.toCharArray();
     StringBuilder messageBuilder = new StringBuilder();
     String tag;
+    boolean silent = false;
     for (int i = 0; i < array.length; i++) {
       tag = getTag(array, i);
       if (tag.isEmpty()) {
         if (i + 1 < array.length && array[i] == '-' && array[i + 1] == 's') {
           if (i + 2 == array.length || !getTag(array, i + 2).isEmpty()) {
+            silent = true;
             blocks.add(new MessageResponseBlock(messageBuilder.toString(), true));
             i++;
             continue;
@@ -64,6 +66,9 @@ public class CommandResponse {
           }
           break;
       }
+    }
+    if(!silent){
+      blocks.add(new MessageResponseBlock(messageBuilder.toString(), false));
     }
     return blocks.toArray(new ResponseBlock[]{});
   }

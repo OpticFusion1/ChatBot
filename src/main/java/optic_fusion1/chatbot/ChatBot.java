@@ -1,12 +1,8 @@
 package optic_fusion1.chatbot;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.chat.ComponentSerializer;
 import optic_fusion1.chatbot.bot.Bot;
 import optic_fusion1.chatbot.bot.BotManager;
 import optic_fusion1.chatbot.command.BotCommand;
@@ -18,7 +14,6 @@ import optic_fusion1.chatbot.utils.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,7 +26,6 @@ public class ChatBot extends JavaPlugin {
   public static boolean usePlaceholderAPI = false;
   public static boolean useMVDWPlaceholderAPI = false;
   private PluginManager pluginManager;
-  private static final File currDirectory = new File(".");
 
   @Override
   public void onEnable() {

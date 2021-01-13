@@ -22,6 +22,7 @@ import optic_fusion1.chatbot.utils.FileUtils;
 import optic_fusion1.chatbot.utils.JSONUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -38,6 +39,7 @@ public class Bot {
   private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("[%]([^%]+)[%]");
   private static final Pattern COMMAND_PATTERN = Pattern.compile("\\[cmd type\\=(.+?)\\](.*?)\\[\\/cmd\\]");
   private static final Pattern PERMISSION_PATTERN = Pattern.compile("\\[perm\\=(.+?)\\](.*?)\\[\\/perm\\]");
+  private static final Pattern SOUND_PATTERN = Pattern.compile("\\[sound\\=(.+?)\\](.*?)\\[\\/sound\\]");
   private static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
   private final HashMap<String, String> regexes = new HashMap<>();
   private final File file;
@@ -325,7 +327,7 @@ public class Bot {
 //      processResponse(player, "no-matches.sentence-not-found", true);
 //      return;
 //    }
-    if (!response.contains("[cmd") && !response.contains("[perm")) {
+    if (!response.contains("[cmd") && !response.contains("[perm") && !response.contains("[sound")) {
       if (!response.contains("%arg-")) {
         sendTimedBroadcast(player, response);
       } else {
@@ -357,6 +359,13 @@ public class Bot {
           return;
         }
         processResponse(player, matcher.group(2), false);
+      } else if (response.contains("[sound")) {
+        Matcher matcher = SOUND_PATTERN.matcher(response);
+        if (!matcher.find()) {
+          continue;
+        }
+        response = response.replaceFirst(SOUND_PATTERN.pattern(), "").trim();
+        player.playSound(player.getLocation(), Sound.valueOf(matcher.group(1).toUpperCase()), 1, 0);
       } else {
         if (!response.contains("%arg-")) {
           sendTimedBroadcast(player, response);
@@ -418,8 +427,8 @@ public class Bot {
     sender.sendMessage(translate(sender, config.getString("message-added")));
     reload();
   }
-  
-  public boolean isBotNameOnly(String message){
+
+  public boolean isBotNameOnly(String message) {
     return message.equals(name) || aliases.contains(message);
   }
 

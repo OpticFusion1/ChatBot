@@ -418,5 +418,9 @@ public class Bot {
     sender.sendMessage(translate(sender, config.getString("message-added")));
     reload();
   }
+  
+  public boolean isBotNameOnly(String message){
+    return message.equals(name) || aliases.contains(message);
+  }
 
 }

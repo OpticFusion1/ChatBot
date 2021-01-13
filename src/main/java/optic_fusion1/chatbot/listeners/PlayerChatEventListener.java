@@ -36,7 +36,7 @@ public class PlayerChatEventListener implements Listener {
   }
 
   private void processMessage(Player player, Bot bot, String message) {
-    if (message.equalsIgnoreCase(bot.getName())) {
+    if(bot.isBotNameOnly(message)){
       bot.processResponse(player, "no-matches.bot-name-only", true);
       return;
     }

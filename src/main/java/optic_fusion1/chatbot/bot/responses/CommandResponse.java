@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import optic_fusion1.chatbot.bot.Bot;
+import optic_fusion1.chatbot.utils.JSONUtils;
 
 public class CommandResponse {
 
@@ -31,6 +32,15 @@ public class CommandResponse {
     for (int i = 0; i < array.length; i++) {
       tag = getTag(array, i);
       if (tag.isEmpty()) {
+        if (array[i] == '{') {
+          String json = response.substring(response.indexOf("{"));
+          json = json.substring(0, json.lastIndexOf("}") + 1).trim();
+          if (!JSONUtils.isJSONValid(json)) {
+            throw new IllegalArgumentException(json + " is not valid json");
+          }
+          blocks.add(new MessageResponseBlock(json, false));
+          i += json.length() + 1;
+        }
         if (i + 1 < array.length && array[i] == '-' && array[i + 1] == 's') {
           if (i + 2 == array.length || !getTag(array, i + 2).isEmpty()) {
             silent = true;
@@ -67,7 +77,7 @@ public class CommandResponse {
           break;
       }
     }
-    if(!silent){
+    if (!silent) {
       blocks.add(new MessageResponseBlock(messageBuilder.toString(), false));
     }
     return blocks.toArray(new ResponseBlock[]{});

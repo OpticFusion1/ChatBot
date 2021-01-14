@@ -5,12 +5,14 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import optic_fusion1.chatbot.ChatBot;
 import optic_fusion1.chatbot.bot.Bot;
 import static optic_fusion1.chatbot.bot.translate.TranslateResponse.PLACEHOLDER_PATTERN;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class PlayerTranslator implements Translator {
 
   @Override
-  public String execute(Bot bot, Player player, String origMessage) {
+  public String execute(Bot bot, CommandSender sender, String origMessage) {
+    Player player = (Player) sender;
     String translatedMessage = origMessage;
     if (ChatBot.usePlaceholderAPI) {
       translatedMessage = PlaceholderAPI.setBracketPlaceholders(player, translatedMessage);

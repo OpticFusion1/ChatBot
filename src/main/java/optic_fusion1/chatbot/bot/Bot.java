@@ -121,60 +121,7 @@ public class Bot {
   public String translate(CommandSender sender, String originalMessage, String... playerMessages) {
     return TranslateResponse.parseResponse(this, sender, originalMessage);
   }
-
-  public String translateRandomPlaceholders(String text) {
-    Matcher placeholderMatcher = PLACEHOLDER_PATTERN.matcher(text);
-    while (placeholderMatcher.find()) {
-      String group = placeholderMatcher.group(0);
-      switch (group) {
-        case "random_int": {
-          text = text.replaceAll("%random_int%", String.valueOf(RANDOM.nextInt(Integer.MAX_VALUE) + 1));
-        }
-      }
-    }
-    return text;
-  }
-
-  public String translateBotPlaceholders(String text, String... playerMessages) {
-    Matcher matcher = PLACEHOLDER_PATTERN.matcher(text);
-    while (matcher.find()) {
-      String group = matcher.group(1);
-      if (group.contains("bot_name")) {
-        text = text.replaceAll("%bot_name%", name);
-      } else if (group.contains("bot_name_lowercase")) {
-        text = text.replaceAll("%bot_name_lowercase%", name.toLowerCase());
-      } else if (group.contains("bot_name_uppercase")) {
-        text = text.replaceAll("%bot_name_uppercase%", name.toUpperCase());
-      } else if (group.contains("bot_prefix")) {
-        text = text.replaceAll("%bot_prefix%", prefix);
-      } else if (group.contains("%bot_prefix_lowercase%")) {
-        text = text.replaceAll("%bot_prefix_lowercase%", prefix.toLowerCase());
-      } else if (group.contains("%bot_prefix_uppercase%")) {
-        text = text.replaceAll("%bot_prefix_uppercase%", prefix.toUpperCase());
-      } else if (group.contains("%response_speed%")) {
-        text = text.replaceAll("%response_speed%", String.valueOf(responseSpeed));
-      } else if (group.contains("arg-")) {
-        if (playerMessages.length == 0) {
-          continue;
-        }
-        String playerMessage = playerMessages[0];
-        if (playerMessage.isEmpty()) {
-          continue;
-        }
-        String[] args = playerMessage.split(" ");
-        int arg = Integer.parseInt(group.replace("arg-", ""));
-        String found = "not-found";
-        try {
-          found = args[arg];
-        } catch (Exception e) {
-
-        }
-        text = text.replaceAll("%arg-" + arg + "%", found);
-      }
-    }
-    return text;
-  }
-
+  
   public String translatePlayerDeathEvent(PlayerDeathEvent event, Player player, String message) {
     String finalString = message;
     Entity killed = (Entity) event.getEntity();

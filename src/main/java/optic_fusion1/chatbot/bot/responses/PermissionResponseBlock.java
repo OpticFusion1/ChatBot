@@ -19,7 +19,7 @@ public class PermissionResponseBlock extends ResponseBlock {
     if(!player.hasPermission(permission)){
       return;
     }
-    new CommandResponse(rest);
+    new CommandResponse(rest).execute(bot, SCHEDULER, player, origMessage);
   }
 
   @Override

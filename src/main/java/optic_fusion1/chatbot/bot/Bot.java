@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -14,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
@@ -25,7 +23,6 @@ import optic_fusion1.chatbot.utils.FileUtils;
 import optic_fusion1.chatbot.utils.JSONUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -121,7 +118,7 @@ public class Bot {
   public String translate(CommandSender sender, String originalMessage, String... playerMessages) {
     return TranslateResponse.parseResponse(this, sender, originalMessage);
   }
-  
+
   public String translatePlayerDeathEvent(PlayerDeathEvent event, Player player, String message) {
     String finalString = message;
     Entity killed = (Entity) event.getEntity();
@@ -160,8 +157,12 @@ public class Bot {
     SCHEDULER.scheduleSyncDelayedTask(ChatBot.INSTANCE, () -> {
       ComponentBuilder componentBuilder = new ComponentBuilder();
       if (JSONUtils.isJSONValid(m)) {
-        componentBuilder.append(new TextComponent(ChatColor.translateAlternateColorCodes('&', prefix + " ")));
-        componentBuilder.append(ComponentSerializer.parse(ChatColor.translateAlternateColorCodes('&', translate(player, m, playerMessages))));
+        try {
+          componentBuilder.append(new TextComponent(ChatColor.translateAlternateColorCodes('&', prefix + " ")));
+          componentBuilder.append(ComponentSerializer.parse(ChatColor.translateAlternateColorCodes('&', translate(player, m, playerMessages))));
+        } catch (Exception e) {
+          componentBuilder = new ComponentBuilder();
+        }
       }
       if (m.contains("\n")) {
         String[] args = m.split("\n");

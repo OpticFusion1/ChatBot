@@ -1,6 +1,7 @@
 package optic_fusion1.chatbot.bot.responses;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +11,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 import optic_fusion1.chatbot.bot.Bot;
 import optic_fusion1.chatbot.utils.JSONUtils;
+import optic_fusion1.chatbot.utils.Time;
 
 public class CommandResponse {
 
@@ -21,7 +23,8 @@ public class CommandResponse {
 
   private static final Pattern COMMAND_PATTERN = Pattern.compile("\\[cmd type\\=(.+?)\\](.*?)\\[\\/cmd\\]");
   private static final Pattern PERMISSION_PATTERN = Pattern.compile("\\[perm\\=(.+?)\\](.*?)\\[\\/perm\\]");
-  private static final Pattern SOUND_PATTERN = Pattern.compile("\\[sound\\=(.+?)\\](.*?)\\[\\/sound\\]");
+  private static final Pattern SOUND_PATTERN = Pattern.compile("\\[sound](.*?)\\[\\/sound\\]");
+  private static final Pattern WAIT_PATTERN = Pattern.compile("\\[wait\\=(.+?)\\](.*?)\\[\\/wait\\]");
 
   private ResponseBlock[] parseResponse(String response) {
     List<ResponseBlock> blocks = new ArrayList<>();
@@ -53,6 +56,13 @@ public class CommandResponse {
         continue;
       }
       switch (tag) {
+        case "wait":
+          Matcher waitMatcher = WAIT_PATTERN.matcher(response.substring(1));
+          if (waitMatcher.find()) {
+            blocks.add(new WaitResponseBlock((long) Time.parseString(waitMatcher.group(1)).toTicks(), waitMatcher.group(2)));
+            i += waitMatcher.group().length();
+          }
+          break;
         case "cmd":
           Matcher commandMatcher = COMMAND_PATTERN.matcher(response.substring(i));
           if (commandMatcher.find()) {
@@ -94,6 +104,9 @@ public class CommandResponse {
         } else if (array[index + 1] == 's' && array[index + 2] == 'o' && array[index + 3] == 'u'
                 && array[index + 4] == 'n' && array[index + 5] == 'd') {
           return "sound";
+        } else if (array[index + 1] == 'w' && array[index + 2] == 'a' && array[index + 3] == 'i'
+                && array[index + 4] == 't') {
+          return "wait";
         }
       }
     }

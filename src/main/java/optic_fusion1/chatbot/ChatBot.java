@@ -7,6 +7,7 @@ import optic_fusion1.chatbot.bot.Bot;
 import optic_fusion1.chatbot.bot.BotManager;
 import optic_fusion1.chatbot.command.BotCommand;
 import optic_fusion1.chatbot.listeners.EntityDeathEventListener;
+import optic_fusion1.chatbot.listeners.PlayerAdvancementDoneEventListener;
 import optic_fusion1.chatbot.listeners.PlayerChatEventListener;
 import optic_fusion1.chatbot.listeners.PlayerJoinEventListener;
 import optic_fusion1.chatbot.listeners.PlayerQuitEventListener;
@@ -47,6 +48,7 @@ public class ChatBot extends JavaPlugin {
     register(new PlayerChatEventListener(this));
     register(new PlayerJoinEventListener(this));
     register(new PlayerQuitEventListener(this));
+    register(new PlayerAdvancementDoneEventListener(this));
   }
 
   private void register(Listener listener) {

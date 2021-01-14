@@ -83,26 +83,6 @@ public class Bot {
     }
   }
 
-  public List<String> getAliases() {
-    return aliases;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getPrefix() {
-    return prefix;
-  }
-
-  public int getResponseSpeed() {
-    return responseSpeed;
-  }
-
-  public boolean isDefault() {
-    return isDefault;
-  }
-
   public void reload() {
     config = (FileConfiguration) YamlConfiguration.loadConfiguration(file);
     name = config.getString("name");
@@ -155,14 +135,6 @@ public class Bot {
       }
       Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', translate(player, prefix + " " + m, playerMessages)));
     }, responseSpeed);
-  }
-
-  public String getRandomResponse(String string) {
-    final List<String> responseList = config.getStringList(string);
-    if (responseList.isEmpty()) {
-      return "not-found";
-    }
-    return responseList.get(RANDOM.nextInt(responseList.size()));
   }
 
   public void processEventResponse(Player player, String message, boolean getRandomResponse, Event event) {
@@ -228,6 +200,34 @@ public class Bot {
 
   public boolean isBotNameOnly(String message) {
     return message.equals(name) || aliases.contains(message);
+  }
+
+  public String getRandomResponse(String string) {
+    final List<String> responseList = config.getStringList(string);
+    if (responseList.isEmpty()) {
+      return "not-found";
+    }
+    return responseList.get(RANDOM.nextInt(responseList.size()));
+  }
+
+  public List<String> getAliases() {
+    return aliases;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getPrefix() {
+    return prefix;
+  }
+
+  public int getResponseSpeed() {
+    return responseSpeed;
+  }
+
+  public boolean isDefault() {
+    return isDefault;
   }
 
 }

@@ -33,6 +33,9 @@ public class CommandResponse {
 
   private ResponseBlock[] parseResponse(String response) {
     List<ResponseBlock> blocks = new ArrayList<>();
+    if(response.equals("not-found")){
+      return blocks.toArray(new ResponseBlock[]{});
+    }
     char[] array = response.toCharArray();
     StringBuilder messageBuilder = new StringBuilder();
     String tag;

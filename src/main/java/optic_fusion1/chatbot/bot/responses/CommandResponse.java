@@ -1,5 +1,10 @@
 package optic_fusion1.chatbot.bot.responses;
 
+import optic_fusion1.chatbot.bot.responses.blocks.PermissionResponseBlock;
+import optic_fusion1.chatbot.bot.responses.blocks.SoundResponseBlock;
+import optic_fusion1.chatbot.bot.responses.blocks.WaitResponseBlock;
+import optic_fusion1.chatbot.bot.responses.blocks.CommandResponseBlock;
+import optic_fusion1.chatbot.bot.responses.blocks.MessageResponseBlock;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -1,9 +1,10 @@
-package optic_fusion1.chatbot.bot.translate;
+package optic_fusion1.chatbot.bot.translate.translators;
 
 import java.util.regex.Matcher;
 import me.clip.placeholderapi.PlaceholderAPI;
 import optic_fusion1.chatbot.ChatBot;
 import optic_fusion1.chatbot.bot.Bot;
+import optic_fusion1.chatbot.bot.translate.Translator;
 import static optic_fusion1.chatbot.bot.translate.TranslateResponse.PLACEHOLDER_PATTERN;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

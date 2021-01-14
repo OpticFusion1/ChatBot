@@ -1,7 +1,8 @@
-package optic_fusion1.chatbot.bot.translate;
+package optic_fusion1.chatbot.bot.translate.translators;
 
 import java.util.regex.Matcher;
 import optic_fusion1.chatbot.bot.Bot;
+import optic_fusion1.chatbot.bot.translate.Translator;
 import static optic_fusion1.chatbot.bot.translate.TranslateResponse.PLACEHOLDER_PATTERN;
 import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.command.CommandSender;

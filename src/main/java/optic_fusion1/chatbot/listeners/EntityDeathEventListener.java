@@ -17,14 +17,14 @@ public class EntityDeathEventListener implements Listener {
   @EventHandler
   public void on(PlayerDeathEvent event) {
     chatBot.getBotManager().getBots().stream().filter(bot -> (bot.hasResponse("events.playerdeath"))).forEachOrdered(bot -> {
-      bot.processResponse(event.getEntity(), bot.translatePlayerDeathEvent(event, event.getEntity(), bot.getRandomResponse("events.playerdeath")), false);
+      bot.processEventResponse(event.getEntity(), "events.playerdeath", true, event);
     });
   }
 
   @EventHandler
   public void on(EntityDeathEvent event) {
     chatBot.getBotManager().getBots().stream().filter(bot -> (bot.hasResponse("events.entitydeath"))).forEachOrdered(bot -> {
-      bot.processResponse(event.getEntity().getKiller(), bot.translateEntityDeathEvent(event, event.getEntity().getKiller(), bot.getRandomResponse("events.entitydeath")), false);
+      bot.processEventResponse(event.getEntity().getKiller(), "events.entitydeath", true, event);
     });
   }
 

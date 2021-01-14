@@ -16,7 +16,8 @@ public class PlayerJoinEventListener implements Listener {
   @EventHandler
   public void on(PlayerJoinEvent event) {
     chatBot.getBotManager().getBots().stream().filter(bot -> (bot.hasResponse("events.playerjoin"))).forEachOrdered(bot -> {
-      bot.processResponse(event.getPlayer(), "events.playerjoin", true);
+      bot.processEventResponse(event.getPlayer(), "events.playerjoin", true, event);
+//      bot.processResponse(event.getPlayer(), "events.playerjoin", true);
     });
   }
 

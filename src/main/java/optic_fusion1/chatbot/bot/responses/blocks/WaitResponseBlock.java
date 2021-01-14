@@ -1,7 +1,9 @@
-package optic_fusion1.chatbot.bot.responses;
+package optic_fusion1.chatbot.bot.responses.blocks;
 
 import optic_fusion1.chatbot.ChatBot;
 import optic_fusion1.chatbot.bot.Bot;
+import optic_fusion1.chatbot.bot.responses.CommandResponse;
+import optic_fusion1.chatbot.bot.responses.ResponseBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;

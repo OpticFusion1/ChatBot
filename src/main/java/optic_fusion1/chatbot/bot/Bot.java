@@ -28,6 +28,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -36,7 +37,6 @@ import org.bukkit.scheduler.BukkitScheduler;
 public class Bot {
 
   private static final Random RANDOM = new Random();
-  private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("[%]([^%]+)[%]");
   private static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
   private final HashMap<String, String> regexes = new HashMap<>();
   private final File file;
@@ -119,37 +119,6 @@ public class Bot {
     return TranslateResponse.parseResponse(this, sender, originalMessage);
   }
 
-  public String translatePlayerDeathEvent(PlayerDeathEvent event, Player player, String message) {
-    String finalString = message;
-    Entity killed = (Entity) event.getEntity();
-    Entity killer = (Entity) event.getEntity().getKiller();
-    finalString = finalString.replaceAll("%dropped_xp_amount%", String.valueOf(event.getDroppedExp()));
-    finalString = finalString.replaceAll("%drop_amount%", String.valueOf(event.getDrops().size()));
-    finalString = finalString.replaceAll("%killed_name", getEntityName(killed));
-    if (killer != null) {
-      finalString = finalString.replaceAll("%killer_name%", getEntityName(killer));
-    }
-    return translate(player, finalString);
-  }
-
-  public String translateEntityDeathEvent(EntityDeathEvent event, Player player, String message) {
-    String finalString = message;
-    Entity killed = (Entity) event.getEntity();
-    Entity killer = (Entity) event.getEntity().getKiller();
-    finalString = finalString.replaceAll("%killed_name%", getEntityName(killed));
-    if (killer != null) {
-      finalString = finalString.replaceAll("%killer_name%", getEntityName(killer));
-    }
-    return translate(player, finalString);
-  }
-
-  private String getEntityName(final Entity entity) {
-    if (entity instanceof Player) {
-      return ((Player) entity).getDisplayName();
-    }
-    return (entity.getCustomName() == null) ? entity.getName() : entity.getCustomName();
-  }
-
   public void sendTimedBroadcast(Player player, String message, String... playerMessages) {
     boolean silent = message.endsWith("-s");
     String m = silent ? message.substring(0, message.length() - 2).trim() : message;
@@ -191,20 +160,17 @@ public class Bot {
     }, responseSpeed);
   }
 
-  public void sendPlayerDeathEventTimedBroadcast(PlayerDeathEvent event, Player player, String message) {
-    processResponse(player, translatePlayerDeathEvent(event, player, message), true);
-  }
-
-  public void sendEntityDeathEventTimedBroadcast(EntityDeathEvent event, Player player, String message) {
-    processResponse(player, translateEntityDeathEvent(event, player, message), true);
-  }
-
   public String getRandomResponse(String string) {
     final List<String> responseList = config.getStringList(string);
     if (responseList.isEmpty()) {
       return "not-found";
     }
     return responseList.get(RANDOM.nextInt(responseList.size()));
+  }
+
+  public void processEventResponse(Player player, String message, boolean getRandomResponse, Event event) {
+    String response = getRandomResponse ? getRandomResponse(message.toLowerCase()) : message.toLowerCase();
+    new CommandResponse(TranslateResponse.parseResponse(this, player, response, event)).execute(this, SCHEDULER, player, message);
   }
 
   public void processResponse(Player player, String message, boolean getRandomResponse) {

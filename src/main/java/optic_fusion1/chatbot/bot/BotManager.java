@@ -3,6 +3,7 @@ package optic_fusion1.chatbot.bot;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import optic_fusion1.chatbot.events.BotDisableEvent;
 import optic_fusion1.chatbot.events.BotEnableEvent;
 import optic_fusion1.chatbot.events.BotReloadEvent;
@@ -39,7 +40,10 @@ public class BotManager {
   }
 
   public void disableAllBots() {
-    BOTS.values().forEach(bot -> removeBot(bot));
+    Iterator<Bot> bots = BOTS.values().iterator();
+    while (bots.hasNext()) {
+      removeBot(bots.next());
+    }
   }
 
   public void reloadAllBots() {
@@ -59,7 +63,7 @@ public class BotManager {
     Bot bot = BOTS.get(name.toLowerCase());
     if (bot == null) {
       for (Bot targetBot : BOTS.values()) {
-        if(targetBot.getAliases().contains(name)){
+        if (targetBot.getAliases().contains(name)) {
           bot = targetBot;
           break;
         }

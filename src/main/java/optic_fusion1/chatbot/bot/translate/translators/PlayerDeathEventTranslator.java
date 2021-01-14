@@ -3,7 +3,6 @@ package optic_fusion1.chatbot.bot.translate.translators;
 import java.util.regex.Matcher;
 import optic_fusion1.chatbot.bot.Bot;
 import optic_fusion1.chatbot.bot.translate.EventTranslator;
-import optic_fusion1.chatbot.bot.translate.TranslateResponse;
 import static optic_fusion1.chatbot.bot.translate.TranslateResponse.PLACEHOLDER_PATTERN;
 import optic_fusion1.chatbot.utils.Utils;
 import org.bukkit.command.CommandSender;

@@ -18,6 +18,7 @@ public class TranslateResponse {
     if (sender instanceof Player) {
       translatedMessage = new PlayerTranslator().execute(bot, (Player) sender, translatedMessage);
     }
+    translatedMessage = new BotTranslator().execute(bot, sender, translatedMessage);
     translatedMessage = new RandomTranslator().execute(bot, sender, translatedMessage);
     return translatedMessage;
   }

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>optic_fusion1</groupId>
     <artifactId>ChatBot</artifactId>
-    <version>5.15.1</version>
+    <version>5.16</version>
     <packaging>jar</packaging>
     
     <repositories>

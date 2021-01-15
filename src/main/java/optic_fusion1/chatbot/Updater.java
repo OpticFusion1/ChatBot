@@ -147,7 +147,7 @@ public class Updater {
       this.download(new URL("https://api.spiget.org/v2/resources/" + resourceId + "/download"), new File(Bukkit.getServer().getUpdateFolderFile(), plugin.getDescription().getName() + ".jar"));
       return true;
     } catch (IOException e) {
-      plugin.getLogger().warning("Unable to download jar");
+      plugin.getLogger().warning("Failed to download latest jar, it must be downloaded manually");
       e.printStackTrace();
       return false;
     }

@@ -194,7 +194,6 @@ public class Bot {
               new Object[]{message, response, file});
       return;
     }
-    sender.sendMessage(translate(sender, config.getString("message-added")));
     reload();
   }
 

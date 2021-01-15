@@ -8,8 +8,6 @@ incorrect-usage: "Incorrect usage! Use &o/chatbot <reload/(add)> (message) (resp
 reloaded: "Successfully reloaded the config!"
 #The mesasge sent to the player when they don't have permission to use a certain command
 no-permission: "You do not have permission to do that!"
-#The message sent to the player when they successfully added a message to the miscellaneous section of the config
-message-added: "Message successfully added to the Chatbot config!"
 #The message sent if the command is done in the console
 console-execute: "You must execute this command as a player"
 #The message sent to the player if the bot doesn't exist

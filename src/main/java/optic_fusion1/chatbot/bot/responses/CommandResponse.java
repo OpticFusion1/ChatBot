@@ -1,22 +1,19 @@
 package optic_fusion1.chatbot.bot.responses;
 
-import optic_fusion1.chatbot.bot.responses.blocks.PermissionResponseBlock;
-import optic_fusion1.chatbot.bot.responses.blocks.SoundResponseBlock;
-import optic_fusion1.chatbot.bot.responses.blocks.WaitResponseBlock;
-import optic_fusion1.chatbot.bot.responses.blocks.CommandResponseBlock;
-import optic_fusion1.chatbot.bot.responses.blocks.MessageResponseBlock;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitScheduler;
-
 import optic_fusion1.chatbot.bot.Bot;
+import optic_fusion1.chatbot.bot.responses.blocks.CommandResponseBlock;
+import optic_fusion1.chatbot.bot.responses.blocks.MessageResponseBlock;
+import optic_fusion1.chatbot.bot.responses.blocks.PermissionResponseBlock;
+import optic_fusion1.chatbot.bot.responses.blocks.SoundResponseBlock;
+import optic_fusion1.chatbot.bot.responses.blocks.WaitResponseBlock;
 import optic_fusion1.chatbot.utils.JSONUtils;
 import optic_fusion1.chatbot.utils.Time;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class CommandResponse {
 
@@ -33,7 +30,7 @@ public class CommandResponse {
 
   private ResponseBlock[] parseResponse(String response) {
     List<ResponseBlock> blocks = new ArrayList<>();
-    if(response.equals("not-found")){
+    if (response.equals("not-found")) {
       return blocks.toArray(new ResponseBlock[]{});
     }
     char[] array = response.toCharArray();
@@ -122,8 +119,8 @@ public class CommandResponse {
   }
 
   public void execute(Bot bot, BukkitScheduler SCHEDULER, Player player, String origMessage) {
-    for (int i = 0; i < responseBlocks.length; i++) {
-      responseBlocks[i].execute(bot, SCHEDULER, player, origMessage);
+    for (ResponseBlock responseBlock : responseBlocks) {
+      responseBlock.execute(bot, SCHEDULER, player, origMessage);
     }
   }
 

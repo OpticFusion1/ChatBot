@@ -70,7 +70,7 @@ public class BotCommand implements TabExecutor, CommandExecutor {
   public boolean onCommand(CommandSender sender, Command cmnd, String string, String[] strings) {
     if (!(sender instanceof Player)) {
       if (strings.length == 0) {
-        sender.sendMessage(prefix + " " + config.getString("usage"));
+        sender.sendMessage(Utils.colorize(prefix + " " + config.getString("usage")));
         return true;
       }
       if (strings[0].equalsIgnoreCase("reload")) {
@@ -120,7 +120,7 @@ public class BotCommand implements TabExecutor, CommandExecutor {
     }
     String response = StringUtils.join(args, " ", 3, args.length);
     bot.addMiscResponse(args[2], response, sender);
-    sender.sendMessage("Added " + args[2] + " with a response of " + response + " to the bot " + args[1]);
+    sender.sendMessage(Utils.colorize(prefix + " Added " + args[2] + " with a response of " + response + " to the bot " + args[1]));
   }
 
   public void listBots(CommandSender sender) {

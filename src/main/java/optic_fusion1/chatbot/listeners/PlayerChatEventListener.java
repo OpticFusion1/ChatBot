@@ -52,7 +52,7 @@ public class PlayerChatEventListener implements Listener {
     if (sentRegex) {
       return;
     }
-    String msg = "responses." + message.replaceAll("[^\\p{L} ]", "").replaceAll(bot.getName() + " ", "").replaceAll(" ", ".").toLowerCase();
+    String msg = "responses." + message.replaceAll("[^\\p{L} ]", "").replaceAll(bot.getName() + " ", "").trim().replaceAll(" ", ".").toLowerCase();
     if (bot.hasResponse(msg)) {
       bot.processResponse(player, msg, true);
       return;

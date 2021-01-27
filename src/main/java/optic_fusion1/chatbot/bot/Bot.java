@@ -96,10 +96,9 @@ public class Bot {
     return TranslateResponse.parseResponse(this, sender, originalMessage);
   }
 
-  public void sendTimedBroadcast(Player player, String message, String... playerMessages) {
-    boolean silent = message.endsWith("-s");
-    String m = silent ? message.substring(0, message.length() - 2).trim() : message;
-
+  public void sendTimedBroadcast(Player player, String message, boolean silent, String... playerMessages) {
+    String m = silent ? message.substring(0, message.length() - 2).trim() : message.trim();
+    System.out.println("Silent: " + silent + " Message: " + message + " M: " + m);
     SCHEDULER.scheduleSyncDelayedTask(ChatBot.INSTANCE, () -> {
       ComponentBuilder componentBuilder = new ComponentBuilder();
       if (JSONUtils.isJSONValid(m)) {

@@ -48,6 +48,7 @@ public class CommandResponse {
           }
           blocks.add(new MessageResponseBlock(json, false));
           i += json.length() + 1;
+          continue;
         }
         if (i + 1 < array.length && array[i] == '-' && array[i + 1] == 's') {
           if (i + 2 == array.length || !getTag(array, i + 2).isEmpty()) {

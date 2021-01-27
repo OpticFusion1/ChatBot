@@ -18,9 +18,9 @@ public class MessageResponseBlock extends ResponseBlock {
   @Override
   public void execute(Bot bot, BukkitScheduler SCHEDULER, Player player, String origMessage) {
     if (!message.contains("%arg-")) {
-      bot.sendTimedBroadcast(player, message);
+      bot.sendTimedBroadcast(player, message, silent);
     } else {
-      bot.sendTimedBroadcast(player, message, origMessage.replaceAll("-", " ").replaceAll("\\.", " "));
+      bot.sendTimedBroadcast(player, message, silent, origMessage.replaceAll("-", " ").replaceAll("\\.", " "));
     }
   }
 

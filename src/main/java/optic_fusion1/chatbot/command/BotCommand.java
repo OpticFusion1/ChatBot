@@ -35,6 +35,7 @@ public class BotCommand implements TabExecutor, CommandExecutor {
       list.add("reload");
       list.add("disable");
       list.add("list");
+      list.add("add");
       return list;
     }
     if (strings[0].equalsIgnoreCase("enable") && strings.length == 2) {

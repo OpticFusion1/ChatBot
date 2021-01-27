@@ -31,7 +31,7 @@ public class PlayerChatEventListener implements Listener {
       }
     }
     if (player.hasPermission("chatbot.use." + bot.getName())) {
-      processMessage(player, bot, message.replaceAll("[^\\p{L} ]", "").replaceAll("\\\\.", ""));
+      processMessage(player, bot, message.replaceAll("\\\\.", ""));
     }
   }
 

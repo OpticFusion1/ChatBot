@@ -143,7 +143,7 @@ public class Bot {
   }
 
   public void processResponse(Player player, String message, boolean getRandomResponse) {
-    String response = getRandomResponse ? getRandomResponse(message.toLowerCase()) : message.toLowerCase();
+    String response = getRandomResponse ? getRandomResponse(message.toLowerCase()) : message;
     new CommandResponse(response).execute(this, SCHEDULER, player, message);
   }
 

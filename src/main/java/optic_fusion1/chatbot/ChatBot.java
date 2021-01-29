@@ -3,6 +3,7 @@ package optic_fusion1.chatbot;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import optic_fusion1.chatbot.Updater.UpdateResult;
 import optic_fusion1.chatbot.bot.Bot;
 import optic_fusion1.chatbot.bot.BotManager;
 import optic_fusion1.chatbot.command.BotCommand;
@@ -33,7 +34,10 @@ public class ChatBot extends JavaPlugin {
     INSTANCE = this;
     new MetricsLite(this, 55642);
     checkForUpdate();
-    saveDefaultConfig();
+    File file = new File("chatbot", "config.yml");
+    if (!file.exists()) {
+      saveDefaultConfig();
+    }
     createFiles();
     loadBots();
     useMVDWPlaceholderAPI = Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI");
@@ -90,16 +94,19 @@ public class ChatBot extends JavaPlugin {
     FileConfiguration pluginConfig = getConfig();
     Updater updater = new Updater(this, 55642, false);
     Updater.UpdateResult result = updater.getResult();
-    if (result == Updater.UpdateResult.UPDATE_AVAILABLE) {
-      if (!pluginConfig.isSet("auto-update") || !pluginConfig.getBoolean("auto-update")) {
+    if (result != UpdateResult.UPDATE_AVAILABLE) {
+      return;
+    }
+    if (!pluginConfig.getBoolean("download-update")) {
         logger.info("===== UPDATE AVAILABLE ====");
         logger.info("https://www.spigotmc.org/resources/chatbot-fully-customizable.55642/");
         logger.log(Level.INFO, "Installed Version: {0} New Version:{1}", new Object[]{updater.getOldVersion(), updater.getVersion()});
         logger.info("===== UPDATE AVAILABLE ====");
-      } else if (pluginConfig.getBoolean("auto-update")) {
-        updater.downloadUpdate();
-      }
+        return;
     }
+    logger.info("==== UPDATE AVAILABLE ====");
+    logger.info("====    DOWNLOADING   ====");
+    updater.downloadUpdate();
   }
 
   @Override

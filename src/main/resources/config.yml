@@ -1,5 +1,6 @@
 #If true the plugin will auto-update
 auto-update: true
+download-update: true
 #The prefix used for command messages
 prefix: "&8[&c&lChatBot&8] &a"
 #The message sent to the player if they use the /bot command incorrectly

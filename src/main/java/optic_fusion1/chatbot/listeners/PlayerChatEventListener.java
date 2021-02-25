@@ -25,6 +25,11 @@ public class PlayerChatEventListener implements Listener {
       if (bot == null) {
         String miscConfigString = "miscellaneous." + message.replaceAll("[^\\p{L} ]", "").replaceAll(" ", "-").toLowerCase();
         chatBot.getBotManager().getBots().stream().filter(cBot -> (cBot.hasResponse(miscConfigString))).forEachOrdered(cBot -> {
+          if (!event.isCancelled()) {
+            if (message.endsWith("-s")) {
+              event.setCancelled(true);
+            }
+          }
           cBot.processResponse(player, miscConfigString, true);
         });
         return;
@@ -32,6 +37,9 @@ public class PlayerChatEventListener implements Listener {
     }
     if (player.hasPermission("chatbot.use." + bot.getName())) {
       processMessage(player, bot, message.replaceAll("\\\\.", ""));
+      if (message.endsWith("-s")) {
+        event.setCancelled(true);
+      }
     }
   }
 

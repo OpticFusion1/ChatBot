@@ -22,7 +22,9 @@ import optic_fusion1.chatbot.bot.translate.TranslateResponse;
 import optic_fusion1.chatbot.utils.FileUtils;
 import optic_fusion1.chatbot.utils.JSONUtils;
 import optic_fusion1.chatbot.utils.Utils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -98,7 +100,9 @@ public class Bot {
 
   public void sendTimedBroadcast(Player player, String message, boolean silent, String... playerMessages) {
     String m = silent ? message.substring(0, message.length() - 2).trim() : message.trim();
-    System.out.println("Silent: " + silent + " Message: " + message + " M: " + m);
+    if (m.isEmpty()) {
+      return;
+    }
     SCHEDULER.scheduleSyncDelayedTask(ChatBot.INSTANCE, () -> {
       ComponentBuilder componentBuilder = new ComponentBuilder();
       if (JSONUtils.isJSONValid(m)) {
@@ -109,8 +113,8 @@ public class Bot {
           componentBuilder = new ComponentBuilder();
         }
       }
-      if (m.contains("\n")) {
-        String[] args = m.split("\n");
+      if (m.contains("\\n")) {
+        String[] args = m.split("\n");       
         for (String arg : args) {
           if (silent) {
             player.sendMessage(Utils.colorize(translate(player, prefix + " " + arg, playerMessages)));

@@ -39,6 +39,9 @@ public class PlayerDeathEventTranslator implements EventTranslator {
             translatedMessage = translatedMessage.replaceAll("%killer_name%", Utils.getEntityName(event.getEntity().getKiller()));
           }
           continue;
+        case "entity_type":
+          translatedMessage = translatedMessage.replaceAll("%entity_type", event.getEntityType().toString());
+          continue;
       }
     }
     return translatedMessage;

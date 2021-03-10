@@ -19,6 +19,7 @@ import net.md_5.bungee.chat.ComponentSerializer;
 import optic_fusion1.chatbot.ChatBot;
 import optic_fusion1.chatbot.bot.responses.CommandResponse;
 import optic_fusion1.chatbot.bot.translate.TranslateResponse;
+import optic_fusion1.chatbot.events.BotResponseEvent;
 import optic_fusion1.chatbot.utils.FileUtils;
 import optic_fusion1.chatbot.utils.JSONUtils;
 import optic_fusion1.chatbot.utils.Utils;
@@ -103,6 +104,11 @@ public class Bot {
     if (m.isEmpty()) {
       return;
     }
+    BotResponseEvent event = new BotResponseEvent(this, m);
+    Bukkit.getPluginManager().callEvent(event);
+    if (event.isCancelled()) {
+      return;
+    }
     SCHEDULER.scheduleSyncDelayedTask(ChatBot.INSTANCE, () -> {
       ComponentBuilder componentBuilder = new ComponentBuilder();
       if (JSONUtils.isJSONValid(m)) {
@@ -114,7 +120,7 @@ public class Bot {
         }
       }
       if (m.contains("\\n")) {
-        String[] args = m.split("\n");       
+        String[] args = m.split("\n");
         for (String arg : args) {
           if (silent) {
             player.sendMessage(Utils.colorize(translate(player, prefix + " " + arg, playerMessages)));

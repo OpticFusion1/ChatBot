@@ -1,5 +1,4 @@
-#If true the plugin will auto-update
-auto-update: true
+#If true the plugin will download updates
 download-update: true
 #The prefix used for command messages
 prefix: "&8[&c&lChatBot&8] &a"
@@ -38,5 +37,7 @@ bot-enabled: "%bot_name% has been enabled"
 all-bots-enabled: "All bots have been enabled"
 #The message sent when a bot doesn't get loaded
 file-wasnt-loaded: "%file_name% wasn't loaded"
+# The message sent if the bot is already disabled
 bot-already-disabled: "%bot_name% is already disabled"
+# The message sent if the bot is already enabled
 bot-already-enabled: "%bot_name% is already enabled"

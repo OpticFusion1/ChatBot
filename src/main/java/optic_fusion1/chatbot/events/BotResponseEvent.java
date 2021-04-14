@@ -22,10 +22,10 @@ public class BotResponseEvent extends Event implements Cancellable {
     return HANDLER_LIST;
   }
 
-  public static HandlerList getHandlerList(){
+  public static HandlerList getHandlerList() {
     return HANDLER_LIST;
   }
-  
+
   @Override
   public boolean isCancelled() {
     return cancelled;

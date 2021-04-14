@@ -35,7 +35,7 @@ public class TranslateResponse {
     if (event instanceof EntityDeathEvent) {
       translatedMessage = new EntityDeathEventTranslator().execute(bot, sender, message, event);
     }
-    if(event instanceof PlayerAdvancementDoneEvent){
+    if (event instanceof PlayerAdvancementDoneEvent) {
       translatedMessage = new PlayerAdvancementDoneEventTranslator().execute(bot, sender, message, event);
     }
     return parseResponse(bot, sender, translatedMessage);

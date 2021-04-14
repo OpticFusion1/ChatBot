@@ -98,11 +98,11 @@ public class ChatBot extends JavaPlugin {
       return;
     }
     if (!pluginConfig.getBoolean("download-update")) {
-        logger.info("===== UPDATE AVAILABLE ====");
-        logger.info("https://www.spigotmc.org/resources/chatbot-fully-customizable.55642/");
-        logger.log(Level.INFO, "Installed Version: {0} New Version:{1}", new Object[]{updater.getOldVersion(), updater.getVersion()});
-        logger.info("===== UPDATE AVAILABLE ====");
-        return;
+      logger.info("===== UPDATE AVAILABLE ====");
+      logger.info("https://www.spigotmc.org/resources/chatbot-fully-customizable.55642/");
+      logger.log(Level.INFO, "Installed Version: {0} New Version:{1}", new Object[]{updater.getOldVersion(), updater.getVersion()});
+      logger.info("===== UPDATE AVAILABLE ====");
+      return;
     }
     logger.info("==== UPDATE AVAILABLE ====");
     logger.info("====    DOWNLOADING   ====");

@@ -33,8 +33,8 @@ public class BotReloadEvent extends Event implements Cancellable {
   public void setCancelled(boolean bln) {
     cancelled = bln;
   }
-  
-  public Bot getBot(){
+
+  public Bot getBot() {
     return bot;
   }
 

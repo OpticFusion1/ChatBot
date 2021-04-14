@@ -153,7 +153,7 @@ public class BotCommand implements TabExecutor, CommandExecutor {
     if (args[1].equalsIgnoreCase("all")) {
       for (File file : chatBot.getBotStorage().listFiles()) {
         if (!botManager.loadBot(file)) {
-          sender.sendMessage(Utils.colorize(prefix + " " + config.getString("file-wasn't-loaded")
+          sender.sendMessage(Utils.colorize(prefix + " " + config.getString("file-wasnt-loaded")
                   .replaceAll("$filename", file.getName()).replaceAll("%file_name%", file.getName())));
         }
       }

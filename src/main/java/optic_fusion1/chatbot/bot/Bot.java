@@ -17,15 +17,14 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 import optic_fusion1.chatbot.ChatBot;
+import static optic_fusion1.chatbot.ChatBot.INSTANCE;
 import optic_fusion1.chatbot.bot.responses.CommandResponse;
 import optic_fusion1.chatbot.bot.translate.TranslateResponse;
 import optic_fusion1.chatbot.events.BotResponseEvent;
 import optic_fusion1.chatbot.utils.FileUtils;
 import optic_fusion1.chatbot.utils.JSONUtils;
 import optic_fusion1.chatbot.utils.Utils;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -105,7 +104,9 @@ public class Bot {
       return;
     }
     BotResponseEvent event = new BotResponseEvent(this, m);
-    Bukkit.getPluginManager().callEvent(event);
+    Bukkit.getScheduler().runTask(INSTANCE, () -> {
+      Bukkit.getPluginManager().callEvent(event);
+    });
     if (event.isCancelled()) {
       return;
     }

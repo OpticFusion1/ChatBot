@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import optic_fusion1.chatbot.ChatBot;
 
+// Copied from spigot so I'm not passing around instances of ChatBot just for utility methods
 public final class FileUtils {
 
   private FileUtils() {

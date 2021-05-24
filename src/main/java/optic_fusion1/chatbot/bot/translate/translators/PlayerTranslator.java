@@ -43,7 +43,6 @@ public class PlayerTranslator implements Translator {
           continue;
         case "player_displayname_uppercase":
           translatedMessage = translatedMessage.replaceAll("%player_displayname_uppercase%", player.getDisplayName().toUpperCase());
-          continue;
       }
     }
     return translatedMessage;

@@ -156,7 +156,7 @@ public class Updater {
   private void download(URL url, File target) throws IOException {
     target.getParentFile().mkdirs();
     target.createNewFile();
-    try (ReadableByteChannel rbc = Channels.newChannel(url.openStream()); FileOutputStream fos = new FileOutputStream(target)) {
+    try ( ReadableByteChannel rbc = Channels.newChannel(url.openStream());  FileOutputStream fos = new FileOutputStream(target)) {
       fos.getChannel().transferFrom(rbc, 0L, Long.MAX_VALUE);
     }
   }

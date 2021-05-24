@@ -327,12 +327,12 @@ public class MetricsLite {
 
     // Send data
     connection.setDoOutput(true);
-    try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
+    try ( DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
       outputStream.write(compressedData);
     }
 
     StringBuilder builder = new StringBuilder();
-    try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+    try ( BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
       String line;
       while ((line = bufferedReader.readLine()) != null) {
         builder.append(line);
@@ -356,7 +356,7 @@ public class MetricsLite {
       return null;
     }
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    try (GZIPOutputStream gzip = new GZIPOutputStream(outputStream)) {
+    try ( GZIPOutputStream gzip = new GZIPOutputStream(outputStream)) {
       gzip.write(str.getBytes(StandardCharsets.UTF_8));
     }
     return outputStream.toByteArray();

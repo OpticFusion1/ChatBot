@@ -25,6 +25,7 @@ public class CommandResponse {
 
   private static final Pattern COMMAND_PATTERN = Pattern.compile("\\[cmd type\\=(.+?)\\](.*?)\\[\\/cmd\\]");
   private static final Pattern PERMISSION_PATTERN = Pattern.compile("\\[perm\\=(.+?)\\](.*?)\\[\\/perm\\]");
+  // TODO: Implement volume and pitch support for sound blocks
   private static final Pattern SOUND_PATTERN = Pattern.compile("\\[sound](.*?)\\[\\/sound\\]");
   private static final Pattern WAIT_PATTERN = Pattern.compile("\\[wait\\=(.+?)\\](.*?)\\[\\/wait\\]");
 

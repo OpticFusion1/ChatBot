@@ -29,7 +29,6 @@ public class PlayerAdvancementDoneEventTranslator implements EventTranslator {
           continue;
         case "advancement_criteria":
           translatedMessage = translatedMessage.replaceAll("%advancement_critera%", Arrays.toString(advancement.getCriteria().toArray()));
-          continue;
       }
     }
     return translatedMessage;

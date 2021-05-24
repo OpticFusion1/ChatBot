@@ -15,9 +15,10 @@ public class PlayerQuitEventListener implements Listener {
 
   @EventHandler
   public void on(PlayerQuitEvent event) {
-    chatBot.getBotManager().getBots().stream().filter(bot -> (bot.hasResponse("events.playerquit"))).forEachOrdered(bot -> {
-      bot.processResponse(event.getPlayer(), "events.playerquit", true);
-    });
+    chatBot.getBotManager().getBots().stream().filter(bot -> (bot.hasResponse("events.playerquit")))
+            .forEachOrdered(bot -> {
+              bot.processResponse(event.getPlayer(), "events.playerquit", true);
+            });
   }
 
 }

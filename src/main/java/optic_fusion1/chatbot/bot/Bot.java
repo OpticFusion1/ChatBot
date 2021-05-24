@@ -22,7 +22,6 @@ import optic_fusion1.chatbot.bot.responses.CommandResponse;
 import optic_fusion1.chatbot.bot.translate.TranslateResponse;
 import optic_fusion1.chatbot.events.BotResponseEvent;
 import optic_fusion1.chatbot.utils.FileUtils;
-import optic_fusion1.chatbot.utils.JSONUtils;
 import optic_fusion1.chatbot.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -32,7 +31,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitScheduler;
 
-//TODO: Update example config to take into account all current features
+// TODO: Update example config to take into account all current features
 public class Bot {
 
   private static final Random RANDOM = new Random();
@@ -45,7 +44,7 @@ public class Bot {
   private String prefix;
   private int responseSpeed;
   private boolean isDefault;
-  private List<String> aliases;
+  private List<String> aliases = new ArrayList<>();
 
   public Bot(File file) {
     this.file = file;
@@ -112,7 +111,7 @@ public class Bot {
     }
     SCHEDULER.scheduleSyncDelayedTask(ChatBot.INSTANCE, () -> {
       ComponentBuilder componentBuilder = new ComponentBuilder();
-      if (JSONUtils.isJSONValid(m)) {
+      if (Utils.isJSONValid(m)) {
         try {
           componentBuilder.append(new TextComponent(Utils.colorize(prefix + " ")));
           componentBuilder.append(ComponentSerializer.parse(Utils.colorize(translate(player, m, playerMessages))));
@@ -192,21 +191,27 @@ public class Bot {
     return config.getString(message) != null && !config.getString(message).isEmpty();
   }
 
-  public void addMiscResponse(String message, String response, CommandSender sender) {
-    List<String> currentResponses = config.getStringList("miscellaneous." + message);
+  public void addMiscResponse(String trigger, String response, CommandSender sender) {
+    List<String> currentResponses = config.getStringList("miscellaneous." + trigger);
     currentResponses.add(response);
-    config.set("miscellaneous." + message, currentResponses);
+    config.set("miscellaneous." + trigger, currentResponses);
     try {
       config.save(file);
     } catch (IOException ex) {
       ChatBot.INSTANCE.getLogger().log(Level.WARNING,
               "Couldn''''t add miscellaneous response miscellaneous.{0}.{1} to bot {2}",
-              new Object[]{message, response, file});
+              new Object[]{trigger, response, file});
       return;
     }
     reload();
   }
 
+  /**
+   * Checks if the given message contains only the bot name. If it does then it return true, otherwise false
+   *
+   * @param message Message to check
+   * @return True if message contains only the bot name, otherwise false
+   */
   public boolean isBotNameOnly(String message) {
     return message.equals(name) || aliases.contains(message);
   }
@@ -219,22 +224,47 @@ public class Bot {
     return responseList.get(RANDOM.nextInt(responseList.size()));
   }
 
+  /**
+   * Gets the bot's aliases,
+   *
+   * @return Bot aliases
+   */
   public List<String> getAliases() {
     return aliases;
   }
 
+  /**
+   * Gets the bot's name
+   *
+   * @return Bot name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Gets the bot's prefix
+   *
+   * @return Bot prefix
+   */
   public String getPrefix() {
     return prefix;
   }
 
+  /**
+   * Gets the bot's response speed in ticks
+   *
+   * @return Bot response speed
+   */
   public int getResponseSpeed() {
     return responseSpeed;
   }
 
+  /**
+   * Gets if the bot is the default bot used handling responses
+   *
+   * @return Is default
+   */
   public boolean isDefault() {
     return isDefault;
   }

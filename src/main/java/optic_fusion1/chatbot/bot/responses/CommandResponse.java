@@ -10,8 +10,8 @@ import optic_fusion1.chatbot.bot.responses.blocks.MessageResponseBlock;
 import optic_fusion1.chatbot.bot.responses.blocks.PermissionResponseBlock;
 import optic_fusion1.chatbot.bot.responses.blocks.SoundResponseBlock;
 import optic_fusion1.chatbot.bot.responses.blocks.WaitResponseBlock;
-import optic_fusion1.chatbot.utils.JSONUtils;
 import optic_fusion1.chatbot.utils.Time;
+import optic_fusion1.chatbot.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -43,7 +43,7 @@ public class CommandResponse {
         if (array[i] == '{') {
           String json = response.substring(response.indexOf("{"));
           json = json.substring(0, json.lastIndexOf("}") + 1).trim();
-          if (!JSONUtils.isJSONValid(json)) {
+          if (!Utils.isJSONValid(json)) {
             throw new IllegalArgumentException(json + " is not valid json");
           }
           blocks.add(new MessageResponseBlock(json, false));

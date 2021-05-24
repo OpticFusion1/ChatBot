@@ -15,6 +15,7 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+// TODO: Rewrite this to use the Conversation API
 public class BotCommand implements TabExecutor, CommandExecutor {
 
   private FileConfiguration config;

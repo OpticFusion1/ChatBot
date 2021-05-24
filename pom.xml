@@ -9,7 +9,7 @@
   <repositories>
     <repository>
       <id>placeholderapi</id>
-      <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+      <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
     </repository>
     <repository>
       <id>mvdw-software</id>
@@ -100,12 +100,6 @@
       <version>1.16.5-R0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>me.clip</groupId>
-      <artifactId>placeholderapi</artifactId>
-      <version>2.10.9</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
       <groupId>be.maximvdw</groupId>
       <artifactId>MVdWPlaceholderAPI</artifactId>
       <version>3.1.1-SNAPSHOT</version>
@@ -115,6 +109,11 @@
           <artifactId>spigot</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>me.clip</groupId>
+      <artifactId>placeholderapi</artifactId>
+      <version>2.10.9</version>
     </dependency>
   </dependencies>
     

@@ -1,5 +1,6 @@
 package optic_fusion1.chatbot.utils;
 
+import com.google.gson.Gson;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 public final class Utils {
 
   private static int SERVER_VERSION = -1;
+  private static final Gson gson = new Gson();
 
   private Utils() {
   }
@@ -40,9 +42,7 @@ public final class Utils {
 
   public static int getTotalDropAmount(List<ItemStack> drops) {
     int amount = 0;
-    for (ItemStack item : drops) {
-      amount += item.getAmount();
-    }
+    amount = drops.stream().map(item -> item.getAmount()).reduce(amount, Integer::sum);
     return amount;
   }
 
@@ -51,6 +51,15 @@ public final class Utils {
       return ((Player) entity).getDisplayName();
     }
     return entity.getCustomName() != null ? entity.getCustomName() : entity.getName();
+  }
+
+  public static boolean isJSONValid(String jsonInString) {
+    try {
+      gson.fromJson(jsonInString, Object.class);
+      return true;
+    } catch (com.google.gson.JsonSyntaxException ex) {
+      return false;
+    }
   }
 
 }

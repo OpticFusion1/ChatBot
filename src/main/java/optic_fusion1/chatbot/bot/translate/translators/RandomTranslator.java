@@ -17,8 +17,8 @@ public class RandomTranslator implements Translator {
       String group = matcher.group(1);
       switch (group) {
         case "random_int":
-          translatedMessage = translatedMessage.replaceAll("%random_int%", String.valueOf(RandomUtils.nextInt(Integer.MAX_VALUE) + 1));
-          continue;
+          translatedMessage = translatedMessage.replaceAll("%random_int%",
+                  String.valueOf(RandomUtils.nextInt(Integer.MAX_VALUE) + 1));
       }
     }
     return translatedMessage;

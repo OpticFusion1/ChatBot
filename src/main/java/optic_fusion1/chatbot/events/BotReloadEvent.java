@@ -1,18 +1,14 @@
 package optic_fusion1.chatbot.events;
 
 import optic_fusion1.chatbot.bot.Bot;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class BotReloadEvent extends Event implements Cancellable {
+public class BotReloadEvent extends BotEvent {
 
   private static final HandlerList HANDLER_LIST = new HandlerList();
-  private boolean cancelled;
-  private final Bot bot;
 
   public BotReloadEvent(Bot bot) {
-    this.bot = bot;
+    super(bot);
   }
 
   @Override
@@ -22,20 +18,6 @@ public class BotReloadEvent extends Event implements Cancellable {
 
   public static HandlerList getHandlerList() {
     return HANDLER_LIST;
-  }
-
-  @Override
-  public boolean isCancelled() {
-    return cancelled;
-  }
-
-  @Override
-  public void setCancelled(boolean bln) {
-    cancelled = bln;
-  }
-
-  public Bot getBot() {
-    return bot;
   }
 
 }

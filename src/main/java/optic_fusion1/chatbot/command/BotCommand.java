@@ -13,8 +13,7 @@
 *
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
+ */
 package optic_fusion1.chatbot.command;
 
 import java.io.File;
@@ -54,9 +53,7 @@ public class BotCommand implements TabExecutor, CommandExecutor {
       list.add("disable");
       list.add("list");
       list.add("add");
-      return list;
-    }
-    if (strings[0].equalsIgnoreCase("enable") && strings.length == 2) {
+    } else if (strings[0].equalsIgnoreCase("enable") && strings.length == 2) {
       list.clear();
       list.add("all");
       for (File file : chatBot.getBotStorage().listFiles()) {
@@ -65,7 +62,6 @@ public class BotCommand implements TabExecutor, CommandExecutor {
           list.add(fileName.substring(0, file.getName().length() - 4));
         }
       }
-      return list;
     } else if (strings[0].equalsIgnoreCase("reload") && strings.length == 2) {
       list.clear();
       list.add("all");
@@ -73,14 +69,12 @@ public class BotCommand implements TabExecutor, CommandExecutor {
       chatBot.getBotManager().getBots().forEach(bot -> {
         list.add(bot.getName());
       });
-      return list;
     } else if (strings[0].equalsIgnoreCase("disable") && strings.length == 2) {
       list.clear();
       list.add("all");
       chatBot.getBotManager().getBots().forEach(bot -> {
         list.add(bot.getName());
       });
-      return list;
     }
     return list;
   }

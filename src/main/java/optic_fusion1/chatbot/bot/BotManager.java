@@ -21,16 +21,15 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import optic_fusion1.chatbot.events.BotDisableEvent;
 import optic_fusion1.chatbot.events.BotEnableEvent;
 import optic_fusion1.chatbot.events.BotReloadEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
 
 public class BotManager {
 
-  private static final PluginManager PLUGIN_MANAGER = Bukkit.getPluginManager();
-  private static final HashMap<String, Bot> BOTS = new HashMap<>();
+  private final Map<String, Bot> BOTS = new HashMap<>();
 
   public Collection<Bot> getBots() {
     return BOTS.values();
@@ -48,7 +47,7 @@ public class BotManager {
       return false;
     }
     BotEnableEvent event = new BotEnableEvent(bot);
-    PLUGIN_MANAGER.callEvent(event);
+    Bukkit.getPluginManager().callEvent(event);
     if (event.isCancelled()) {
       return false;
     }
@@ -69,7 +68,7 @@ public class BotManager {
 
   public void reloadBot(Bot bot) {
     BotReloadEvent event = new BotReloadEvent(bot);
-    PLUGIN_MANAGER.callEvent(event);
+    Bukkit.getPluginManager().callEvent(event);
     if (event.isCancelled()) {
       return;
     }
@@ -100,7 +99,7 @@ public class BotManager {
 
   public void removeBot(Bot bot) {
     BotDisableEvent event = new BotDisableEvent(bot);
-    PLUGIN_MANAGER.callEvent(event);
+    Bukkit.getPluginManager().callEvent(event);
     if (event.isCancelled()) {
       return;
     }

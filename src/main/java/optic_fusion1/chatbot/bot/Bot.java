@@ -25,7 +25,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -46,14 +47,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.scheduler.BukkitScheduler;
 
 // TODO: Update example config to take into account all current features
 public class Bot {
 
-  private static final Random RANDOM = new Random();
-  private static final BukkitScheduler SCHEDULER = Bukkit.getScheduler();
-  private final HashMap<String, String> regexes = new HashMap<>();
+  private final Map<String, String> regexes = new HashMap<>();
   private final File file;
   private final File regexFile;
   private FileConfiguration config;
@@ -126,7 +124,7 @@ public class Bot {
     if (event.isCancelled()) {
       return;
     }
-    SCHEDULER.scheduleSyncDelayedTask(ChatBot.INSTANCE, () -> {
+    Bukkit.getScheduler().scheduleSyncDelayedTask(ChatBot.INSTANCE, () -> {
       ComponentBuilder componentBuilder = new ComponentBuilder();
       if (Utils.isJSONValid(m)) {
         try {
@@ -165,12 +163,12 @@ public class Bot {
 
   public void processEventResponse(Player player, String message, boolean getRandomResponse, Event event) {
     String response = getRandomResponse ? getRandomResponse(message.toLowerCase()) : message.toLowerCase();
-    new CommandResponse(TranslateResponse.parseResponse(this, player, response, event)).execute(this, SCHEDULER, player, message);
+    new CommandResponse(TranslateResponse.parseResponse(this, player, response, event)).execute(this, Bukkit.getScheduler(), player, message);
   }
 
   public void processResponse(Player player, String message, boolean getRandomResponse) {
     String response = getRandomResponse ? getRandomResponse(message.toLowerCase()) : message;
-    new CommandResponse(response).execute(this, SCHEDULER, player, message);
+    new CommandResponse(response).execute(this, Bukkit.getScheduler(), player, message);
   }
 
   public List<String> match(String text, String regex) {
@@ -238,7 +236,7 @@ public class Bot {
     if (responseList.isEmpty()) {
       return "not-found";
     }
-    return responseList.get(RANDOM.nextInt(responseList.size()));
+    return responseList.get(ThreadLocalRandom.current().nextInt(responseList.size()));
   }
 
   /**

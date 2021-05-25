@@ -13,8 +13,7 @@
 *
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
+ */
 package optic_fusion1.chatbot.utils;
 
 import java.io.File;
@@ -37,6 +36,7 @@ public final class FileUtils {
   private FileUtils() {
   }
 
+  // Copied from spigot so I'm not passing around instances of ChatBot just for utility methods
   public static boolean copy(final InputStream source, final String destination) {
     boolean succeess = true;
     try {
@@ -47,11 +47,12 @@ public final class FileUtils {
     return succeess;
   }
 
+  // Copied from spigot so I'm not passing around instances of ChatBot just for utility methods
   public static void saveResourceIfNonExistant(final String filePath, final String resource) {
     final File file = new File(filePath);
     if (!file.exists()) {
+      file.mkdirs();
       try {
-        file.mkdirs();
         file.createNewFile();
       } catch (IOException ex) {
         Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,6 +62,7 @@ public final class FileUtils {
     }
   }
 
+  // Copied from spigot so I'm not passing around instances of ChatBot just for utility methods
   public static void saveResource(final File file, String resourcePath, final boolean replace) {
     if (resourcePath == null || resourcePath.isEmpty()) {
       throw new IllegalArgumentException("ResourcePath cannot be null or empty");
@@ -100,6 +102,7 @@ public final class FileUtils {
     }
   }
 
+  // Copied from spigot so I'm not passing around instances of ChatBot just for utility methods
   public static URL getResourceAsURL(final String filename) {
     if (filename == null) {
       throw new IllegalArgumentException("Filename cannot be null");
@@ -111,6 +114,7 @@ public final class FileUtils {
     return url;
   }
 
+  // Copied from spigot so I'm not passing around instances of ChatBot just for utility methods
   public static InputStream getResource(final String filename) {
     if (filename == null) {
       throw new IllegalArgumentException("Filename cannot be null");
